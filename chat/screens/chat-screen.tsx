@@ -184,10 +184,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     color: '#000',
-    marginRight: 40, // backButton width ile aynı
+    marginRight: 40, 
   },
   headerRight: {
-    width: 40, // Başlığı ortalamak için sağda boş alan
+    width: 40,
   },
 });
 
