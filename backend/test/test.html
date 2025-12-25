@@ -1,0 +1,44 @@
+// test.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat Test</title>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script>
+        let token = ''; // Login'den sonra alınan token'ı buraya yapıştırın
+        
+        const socket = io('http://localhost:3000', {
+            auth: {
+                token: token
+            }
+        });
+
+        socket.on('connect', () => {
+            console.log('Connected to server');
+            document.getElementById('status').textContent = 'Connected';
+        });
+
+        socket.on('users_online', (data) => {
+            console.log('Online users:', data);
+            document.getElementById('online').textContent = JSON.stringify(data);
+        });
+
+        socket.on('previous_messages', (messages) => {
+            console.log('Previous messages:', messages);
+            document.getElementById('messages').textContent = JSON.stringify(messages);
+        });
+
+        function sendMessage() {
+            const content = document.getElementById('messageInput').value;
+            socket.emit('send_message', { content });
+        }
+    </script>
+</head>
+<body>
+    <div>Status: <span id="status">Disconnected</span></div>
+    <div>Online Users: <span id="online"></span></div>
+    <div>Messages: <div id="messages"></div></div>
+    <input type="text" id="messageInput" placeholder="Type a message">
+    <button onclick="sendMessage()">Send</button>
+</body>
+</html>
